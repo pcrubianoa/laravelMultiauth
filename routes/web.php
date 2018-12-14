@@ -18,4 +18,9 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/admin', 'AdminController@index')->name('admin');
+
+Route::group(['prefix' => 'admin'], function () {
+    Route::get('/', 'AdminController@index')->name('admin.home');
+    Route::get('/login', 'AuthAdmin\LoginController@showLoginForm')->name('admin.login');
+    Route::post('/login', 'AuthAdmin\LoginController@login')->name('admin.login.submit');
+});
